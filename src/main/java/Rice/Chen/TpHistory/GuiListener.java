@@ -1,4 +1,4 @@
-package Rice.Chen.TpHistory;
+ package Rice.Chen.TpHistory;
 
 import com.google.common.collect.ImmutableMap;
 import org.bukkit.Bukkit;
@@ -213,9 +213,8 @@ public class GuiListener implements Listener {
     public void openTpHistory(Player player) {
         Inventory gui = Bukkit.createInventory(null, 36, translateHexColorCodes("&0&l近十次的傳送紀錄"));
         
-        ItemStack background = new ItemStack(Material.STICK);
+        ItemStack background = new ItemStack(Material.LIGHT_GRAY_STAINED_GLASS_PANE);
         ItemMeta meta = background.getItemMeta();
-        meta.setCustomModelData(20036);
         meta.setDisplayName(" ");
         background.setItemMeta(meta);
         
@@ -223,7 +222,7 @@ public class GuiListener implements Listener {
             gui.setItem(i, background);
         }
 
-        ItemStack menuButton = new ItemStack(Material.STICK);
+        ItemStack menuButton = new ItemStack(Material.OAK_DOOR);
         ItemMeta menuMeta = menuButton.getItemMeta();
         menuMeta.setCustomModelData(20004);
         menuMeta.setDisplayName(translateHexColorCodes("&f&l返回主界面"));
@@ -383,9 +382,9 @@ public class GuiListener implements Listener {
         
         if (clicked == null) return;
         
-        if (event.getSlot() == 27 && clicked.getType() == Material.STICK) {
+        if (event.getSlot() == 27 && clicked.getType() == Material.OAK_DOOR) {
             player.closeInventory();
-            player.performCommand("gmp gui open 傳送功能.yml");
+            player.performCommand("menu");
             return;
         }
         
@@ -403,7 +402,7 @@ public class GuiListener implements Listener {
             if (index < history.size()) {
                 Location loc = history.get(index).getLocation();
                 player.teleportAsync(loc);
-                player.sendMessage(translateHexColorCodes("&7｜&6系統&7｜&f飯娘：#cfffc0已成功&7傳送到選擇的位置！"));
+                player.sendMessage(translateHexColorCodes("&8[&6傳送&8] #cfffc0已成功&7傳送到選擇的位置！"));
                 player.closeInventory();
             }
         }
