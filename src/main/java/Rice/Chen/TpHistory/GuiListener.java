@@ -256,13 +256,11 @@ public class GuiListener implements Listener {
             
             player.openInventory(gui);
             
-            preloadBiomeData(player).thenRun(() -> {
-                Bukkit.getScheduler().runTask(plugin, () -> {
-                    if (player.getOpenInventory().getTitle().equals(translateHexColorCodes("&0&l近十次的傳送紀錄"))) {
-                        updateTpHistoryGUI(player, gui);
-                    }
-                });
-            });
+            preloadBiomeData(player).thenRun(() -> player.getScheduler().run(plugin, task -> {
+                if (player.getOpenInventory().getTitle().equals(translateHexColorCodes("&0&l近十次的傳送紀錄"))) {
+                    updateTpHistoryGUI(player, gui);
+                }
+            }, null));
             return;
         }
         
@@ -357,9 +355,7 @@ public class GuiListener implements Listener {
         
         teleportManager.addTeleportRecord(player, from);
     
-        Bukkit.getScheduler().runTaskAsynchronously(plugin, () -> {
-            preloadBiomeData(player);
-        });
+        Bukkit.getAsyncScheduler().runNow(plugin, task -> preloadBiomeData(player));
         
         /*
         TextComponent message = new TextComponent(translateHexColorCodes("&7｜&6系統&7｜&f飯娘：&7已記錄傳送前的位置，點此查看#e6bbf6近期傳送紀錄&7。"));

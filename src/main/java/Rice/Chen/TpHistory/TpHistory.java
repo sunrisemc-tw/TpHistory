@@ -29,9 +29,7 @@ public class TpHistory extends JavaPlugin implements Listener {
 
     @EventHandler
     public void onPlayerJoin(PlayerJoinEvent event) {
-        Bukkit.getScheduler().runTaskAsynchronously(this, () -> {
-            guiListener.preloadBiomeData(event.getPlayer());
-        });
+        Bukkit.getAsyncScheduler().runNow(this, task -> guiListener.preloadBiomeData(event.getPlayer()));
     }
     
     @Override
